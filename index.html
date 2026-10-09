@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Selamat ulang tahun</title>
+  <meta name="description" content="Ada surat untukmu. Buka, ya.">
+  <meta name="theme-color" content="#1D1832">
+
+  <!-- Tampilan saat link dibagikan ke WhatsApp. Untuk gambar, ganti dengan URL lengkap
+       setelah online, contoh: https://namakamu.github.io/ulang-tahun-risma/assets/foto/foto-1.jpg -->
+  <meta property="og:title" content="Ada surat untukmu 💌">
+  <meta property="og:description" content="Buka pelan-pelan, ya.">
+  <meta property="og:type" content="website">
+  <!-- <meta property="og:image" content="URL-LENGKAP-FOTO"> -->
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%8C%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Ornamen daun yang dipakai ulang di sampul -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ornamen" viewBox="0 0 120 32">
+      <g fill="none" stroke="currentColor" stroke-width=".9" stroke-linecap="round">
+        <path d="M60 27 C 45 26, 27 20, 9 7"/>
+        <path d="M60 27 C 75 26, 93 20, 111 7"/>
+      </g>
+      <g fill="currentColor">
+        <g id="daun-kiri">
+          <ellipse cx="50" cy="23.6" rx="4.6" ry="1.5" transform="rotate(-18 50 23.6)"/>
+          <ellipse cx="45" cy="28.2" rx="4.6" ry="1.5" transform="rotate(14 45 28.2)"/>
+          <ellipse cx="38.5" cy="20.2" rx="4.6" ry="1.5" transform="rotate(-28 38.5 20.2)"/>
+          <ellipse cx="33" cy="25" rx="4.6" ry="1.5" transform="rotate(4 33 25)"/>
+          <ellipse cx="27.5" cy="14.8" rx="4.4" ry="1.45" transform="rotate(-42 27.5 14.8)"/>
+          <ellipse cx="21" cy="19" rx="4.4" ry="1.45" transform="rotate(-8 21 19)"/>
+          <ellipse cx="16.5" cy="8.4" rx="4" ry="1.35" transform="rotate(-55 16.5 8.4)"/>
+          <ellipse cx="10.5" cy="11.5" rx="3.6" ry="1.3" transform="rotate(-22 10.5 11.5)"/>
+        </g>
+        <use href="#daun-kiri" transform="translate(120 0) scale(-1 1)"/>
+        <path d="M60 31 C 55.5 27.5, 56 23.2, 60 25.6 C 64 23.2, 64.5 27.5, 60 31 Z"/>
+      </g>
+    </symbol>
+  </svg>
+
+  <canvas id="latar" aria-hidden="true"></canvas>
+  <canvas id="konfeti" aria-hidden="true"></canvas>
+
+  <button type="button" id="tombol-musik" class="tombol-musik" aria-label="Matikan musik" hidden>
+    <svg class="ikon-nyala" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a4.5 4.5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <svg class="ikon-mati" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16.5 9.5l5 5m0-5l-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+
+  <main>
+
+    <!-- ===================== 1. AMPLOP ===================== -->
+    <section class="adegan adegan--amplop aktif" id="adegan-amplop" aria-labelledby="judul-amplop">
+      <div class="adegan__isi">
+        <h1 class="judul-skrip judul-amplop" id="judul-amplop">Ada surat untukmu</h1>
+
+        <button type="button" class="amplop" id="amplop" aria-label="Buka amplop">
+          <span class="amplop__belakang"></span>
+          <span class="amplop__surat"><span class="amplop__surat-angka" data-isi="usiaKe">26</span></span>
+          <span class="amplop__kantong">
+            <span class="amplop__alamat">Untuk <span data-isi="namaLengkap">Risma</span></span>
+          </span>
+          <span class="amplop__tutup"></span>
+          <span class="amplop__segel"><span data-isi="inisialSegel">R</span></span>
+        </button>
+
+        <p class="petunjuk">Ketuk amplop untuk membuka</p>
+        <p class="hitung-mundur" id="hitung-mundur"></p>
+      </div>
+    </section>
+
+    <!-- ===================== 2. KARTU ===================== -->
+    <section class="adegan adegan--kartu" id="adegan-kartu" aria-label="Kartu ucapan">
+      <div class="adegan__isi">
+        <div class="panggung">
+          <div class="kartu" id="kartu">
+
+            <!-- Halaman dalam (kanan): isi surat -->
+            <article class="kartu__dalam halaman" id="halaman-pesan" aria-label="Isi surat">
+              <header class="kepala-mobile">
+                <img class="kepala-mobile__foto" data-foto-utama alt="">
+                <span>
+                  <span class="kepala-mobile__judul"><span data-isi="judulSampul">Selamat ulang tahun</span> ke-<span data-isi="usiaKe">26</span></span>
+                  <span class="kepala-mobile__tanggal" data-tanggal></span>
+                </span>
+              </header>
+              <p class="salam" data-isi="salam"></p>
+              <div class="pesan" id="pesan" aria-hidden="true"></div>
+              <div class="sr-only" id="pesan-lengkap"></div>
+              <footer class="tanda" id="tanda">
+                <p class="tanda__penutup" data-isi="penutup"></p>
+                <p class="tanda__nama" data-isi="tandaTangan"></p>
+              </footer>
+            </article>
+
+            <!-- Sampul: depan = cover, belakang = halaman kiri saat terbuka -->
+            <div class="kartu__sampul" id="sampul" role="button" tabindex="0" aria-label="Buka kartu">
+              <div class="sisi sisi--depan">
+                <span class="bingkai" aria-hidden="true"></span>
+                <svg class="ornamen" aria-hidden="true"><use href="#ornamen"/></svg>
+                <p class="sampul__judul" data-isi="judulSampul"></p>
+                <p class="sampul__angka foil" data-isi="usiaKe"></p>
+                <p class="sampul__nama" data-isi="namaLengkap"></p>
+                <p class="sampul__tanggal" data-tanggal></p>
+                <svg class="ornamen ornamen--bawah" aria-hidden="true"><use href="#ornamen"/></svg>
+              </div>
+              <div class="sisi sisi--belakang halaman">
+                <figure class="kiri__foto"><img data-foto-utama alt=""></figure>
+                <p class="kiri__kutipan" data-isi="kutipanSampul"></p>
+                <p class="kiri__tanggal" data-tanggal></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <p class="petunjuk" id="petunjuk-kartu">Ketuk kartunya untuk membuka</p>
+        <div class="aksi" id="aksi-kartu">
+          <button type="button" class="tombol" data-ke="galeri">Lihat kenangan kita</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. GALERI ===================== -->
+    <section class="adegan adegan--galeri" id="adegan-galeri" aria-labelledby="judul-galeri">
+      <div class="adegan__isi">
+        <h2 class="judul-skrip" id="judul-galeri" data-isi="judulGaleri" tabindex="-1"></h2>
+        <p class="sub" data-isi="subjudulGaleri"></p>
+        <ul class="galeri" id="galeri"></ul>
+        <div class="aksi tampil">
+          <button type="button" class="tombol tombol--samar" data-ke="kartu">Kembali ke kartu</button>
+          <button type="button" class="tombol" data-ke="kue">Satu kejutan lagi</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 4. KUE ===================== -->
+    <section class="adegan adegan--kue" id="adegan-kue" aria-labelledby="judul-kue">
+      <div class="adegan__isi">
+        <h2 class="judul-skrip" id="judul-kue" data-isi="ajakanKue" tabindex="-1"></h2>
+        <p class="sub" data-isi="ajakanKue2"></p>
+
+        <div class="kue" id="kue">
+          <div class="lilin-wadah" id="lilin-wadah"></div>
+          <div class="kue__atas"></div>
+          <div class="kue__bawah"></div>
+          <div class="kue__piring"></div>
+        </div>
+
+        <div class="aksi tampil" id="aksi-kue">
+          <button type="button" class="tombol" id="tiup">Tiup lilinnya</button>
+          <button type="button" class="tombol tombol--samar" id="tiup-mic">Tiup lewat mikrofon</button>
+        </div>
+        <p class="status-mic" id="status-mic" aria-live="polite"></p>
+
+        <div class="akhir" id="akhir" hidden>
+          <p class="akhir__besar" data-isi="ucapanAkhir"></p>
+          <p class="akhir__kecil" data-isi="ucapanAkhirKecil"></p>
+          <div class="aksi tampil">
+            <button type="button" class="tombol tombol--samar" data-ke="kartu">Baca kartunya lagi</button>
+            <button type="button" class="tombol" id="ulangi">Ulangi dari awal</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Tampilan foto besar -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto" hidden>
+    <button type="button" class="lightbox__tutup" id="lb-tutup" aria-label="Tutup foto">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button type="button" class="lightbox__nav lightbox__nav--kiri" id="lb-kiri" aria-label="Foto sebelumnya">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <figure class="lightbox__isi">
+      <img id="lb-foto" alt="">
+      <figcaption id="lb-ket"></figcaption>
+    </figure>
+    <button type="button" class="lightbox__nav lightbox__nav--kanan" id="lb-kanan" aria-label="Foto berikutnya">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <script src="pengaturan.js"></script>
+  <script src="js/efek.js"></script>
+  <script src="js/musik.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+Taruh lagu MP3 favorit kalian di folder ini dengan nama:  lagu.mp3
+
+Tips:
+- Ukuran file sebaiknya di bawah 10 MB supaya cepat dimuat di HP.
+- Kalau nama file berbeda, ubah baris  musik: "assets/musik/lagu.mp3"  di pengaturan.js.
+- Kalau folder ini kosong, kartu otomatis memutar alunan kotak musik bawaan.
